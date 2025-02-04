@@ -280,10 +280,23 @@ class myState extends State<HomePage> {
                             name: txt01.text,
                             password: txt02.text,
                           ));
+
+                          Navigator.pop(context);
+
+                          if(txt03.text != "") {
+                            items = await _dbHelper.getItem(txt03.text);
+                            isSearch = true;
+                            setState(() {});
+                          }
+                          else {
+                            items = await _dbHelper.getAllItems();
+                            isSearch = false;
+                            setState(() {});
+                          }
+                          setState(() {});
                         }
                         else if(txt01.text == "") {str = "姓名不能為空"; color = Colors.red;}
                         else if(txt02.text == "") {str = "密碼不能為空"; color = Colors.red;}
-
 
 
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -293,8 +306,6 @@ class myState extends State<HomePage> {
                               backgroundColor: color,
                             )
                         );
-
-                        Navigator.pop(context);
                       },
 
                       child: const Text('update'),
